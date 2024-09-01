@@ -12,6 +12,7 @@ class Agent:
         self.state = 'idle'  # or 'carrying'
         self.task = None  # e.g., {'type': 'carry', 'destination': (x, y)}
         self.reproduction_probability = 0.01  # Example probability
+        self.color = np.random.randint(0, 255, size=3, dtype=int)
 
     def update_position(self, bounds):
         self.position += self.velocity

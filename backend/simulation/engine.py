@@ -5,6 +5,7 @@ import threading
 from models.agent import Agent
 import numpy as np
 import random
+from config import Config
 
 class SimulationEngine:
     def __init__(self, bounds=(100, 100), params=None):
@@ -13,16 +14,7 @@ class SimulationEngine:
         self.nodes = [(20, 20), (80, 80)]  # Example nodes
         self.poles = [(20, 80), (80, 20)]  # Example poles
         self.running = False
-        self.params = params or {
-            'neighbor_distance': 10.0,
-            'alignment_weight': 0.05,
-            'cohesion_weight': 0.01,
-            'separation_weight': 0.1,
-            'max_speed': 2.0,
-            'task_speed': 3.0,
-            'task_threshold': 1.0,
-            'reproduction_probability': 0.01
-        }
+        self.params = Config.SIMULATION_PARAMS
         self.lock = threading.Lock()
 
     def initialize_agents(self, num_agents=50):
@@ -48,6 +40,11 @@ class SimulationEngine:
 
     def get_state(self):
         with self.lock:
+            # return {
+            #     'agents': self.agents
+            # }
+
+            # the statement below returns a list of dictionaries based on the agent properties.  however, rest of app is expecting list of agents.
             return [
                 {
                     'id': agent.id,
