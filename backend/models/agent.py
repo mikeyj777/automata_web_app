@@ -3,6 +3,7 @@
 import numpy as np
 import uuid
 import random
+from config import Config
 
 class Agent:
     def __init__(self, position, velocity):
@@ -11,8 +12,13 @@ class Agent:
         self.velocity = np.array(velocity, dtype=float)
         self.state = 'idle'  # or 'carrying'
         self.task = None  # e.g., {'type': 'carry', 'destination': (x, y)}
-        self.reproduction_probability = 0.01  # Example probability
-        self.color = np.random.randint(0, 255, size=3, dtype=int)
+        self.reproduction_probability = Config.SIMULATION_PARAMS['reproduction_probability']
+        self.set_color()
+        self.age = 0
+    
+    def set_color(self):
+        colors = Config.SIMULATION_PARAMS['colors']
+        self.color = random.choice(colors)
 
     def update_position(self, bounds):
         self.position += self.velocity
