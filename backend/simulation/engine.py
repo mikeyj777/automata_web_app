@@ -14,7 +14,9 @@ class SimulationEngine:
         self.nodes = [(20, 20), (80, 80)]  # Example nodes
         self.poles = [(20, 80), (80, 20)]  # Example poles
         self.running = False
-        self.params = Config.SIMULATION_PARAMS
+        self.params = params
+        if self.params is None:
+            self.params = Config.SIMULATION_PARAMS
         self.lock = threading.Lock()
 
     def initialize_agents(self, num_agents=50):
@@ -28,6 +30,7 @@ class SimulationEngine:
     def update(self):
         with self.lock:
             new_agents = []
+            agent:Agent
             for agent in self.agents:
                 agent.apply_flocking(self.agents, self.params)
                 agent.update_position(self.bounds)

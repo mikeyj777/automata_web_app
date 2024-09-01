@@ -17,12 +17,12 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 
 app = Flask(__name__)
-CORS(app, origins=['*'])  # Allow specific origin
+CORS(app, origins=['127.0.0.1'])  # Allow specific origin
 # app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, cors_allowed_origins='*', async_mode='eventlet',log_level='debug')
+socketio = SocketIO(app, cors_allowed_origins=['127.0.0.1'], async_mode='eventlet',log_level='debug')
 
 # Initialize Simulation Engine
-engine = SimulationEngine(bounds=(100, 100))
+engine = SimulationEngine(bounds=(300, 300))
 engine.initialize_agents(num_agents=1)
 
 def simulation_thread():
@@ -31,10 +31,10 @@ def simulation_thread():
 
         engine.update()
         state = engine.get_state()
-        logging.debug(f'State retrieved\n\n\n')
+        # logging.debug(f'State retrieved\n\n\n')
         # Ensure state contains 'agents' and it's an array
         if isinstance(state, list):
-            logging.debug(f'Emitting state: {state}')
+            # logging.debug(f'Emitting state: {state}')
             socketio.emit('update', state)
         else:
             logging.warning(f'State is not a list: {state}')
