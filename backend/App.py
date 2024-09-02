@@ -14,7 +14,6 @@ import logging
 
 num_nodes = 10
 num_poles = 10
-num_agents = 50
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -27,7 +26,7 @@ socketio = SocketIO(app, cors_allowed_origins='*', async_mode='eventlet',log_lev
 
 # Initialize Simulation Engine
 engine = SimulationEngine(bounds=(800, 600), num_nodes=num_nodes, num_poles=num_poles)
-engine.initialize_agents(num_agents=num_agents)
+engine.initialize_agents(num_agents=Config.SIMULATION_PARAMS['num_agents'])
 
 def simulation_thread():
     logging.info('Simulation thread started')

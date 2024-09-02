@@ -11,6 +11,7 @@ class Agent:
         self.position = np.array(position, dtype=float)
         self.velocity = np.array(velocity, dtype=float)
         self.state = 'idle'  # or 'carrying'
+        self.type = random.choice(Config.SIMULATION_PARAMS['agent_types'])
         self.task = None  # e.g., {'type': 'carry', 'destination': (x, y)}
         self.reproduction_probability = Config.SIMULATION_PARAMS['reproduction_probability']
         self.set_color()
@@ -70,7 +71,7 @@ class Agent:
         return None
 
     def assign_task(self, nodes, poles, params):
-        if self.state == 'idle':
+        if self.state == 'idle' and self.type == 'non existent type':
             # Assign a new task based on some condition
             if nodes:
                 target_node = random.choice(nodes)
